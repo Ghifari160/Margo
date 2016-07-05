@@ -1,15 +1,25 @@
 (function ( $ )
 {
-	$(document).ready(function()
+	$.refreshText = function()
 	{
 		$('div').each(function()
 		{
 			if($(this).data('italicize') == "margo")
 			{
-				$(this).html($(this).html().replace(/a/g, "<i>a</i>"));
-				$(this).html($(this).html().replace(/e/g, "<i>e</i>"));
-				$(this).html($(this).html().replace(/o/g, "<i>o</i>"));
+				var txt = $(this).text();
+
+				$(this).html(txt.replace(/a|i|u|e|o|A|I|U|E|O/g, function f(x)
+				{
+						return "<i>" + x + "</i>";
+				}));
+
+				console.log("Refresh: Text");
 			}
 		});
+	}
+
+	$(document).ready(function()
+	{
+		$.refreshText();
 	});
 })( jQuery );
