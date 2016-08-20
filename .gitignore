@@ -1,0 +1,10 @@
+# PHP
+*.php
+
+# Binaries
+*.exe
+*.sh
+*.bat
+*.dll
+*.a
+*.o
