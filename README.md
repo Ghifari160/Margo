@@ -8,6 +8,16 @@ Margo: The Game is a secret project of [Ghifari160][github user ghifari160]. Thi
 * [//margo.beingthe.one][margo via being the one]
 * [//margo.ghifari160.com][margo via ghifari160]
 
+## TODO ##
+- [x] Header Canvas instead of static Header
+- [ ] Header backdrop
+- [ ] Game layout
+- [ ] Game test version
+- [ ] Game security add-on
+- [ ] Codename: Eros
+- [ ] SendGrid integration for email notification
+- [ ] Skype or Hangouts integration?
+
 ## Credits ##
 All of the backend and frontend work on this project is done by [Ghifari160][github user ghifari160]. From artwork all the way to every line of code.
 
