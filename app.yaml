@@ -8,8 +8,5 @@ handlers:
 - url: /assets
   static_dir: assets
 
-- url: /template\.php
-  script: template.php
-
 - url: /.*
-  script: template.php
+  script: main.php

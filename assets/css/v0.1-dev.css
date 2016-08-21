@@ -60,14 +60,14 @@ body
 .m-wrapper
 {
 	width: 97.5%;
-	margin: 225px 1.25% 0 1.25%;
+	margin: 220px 1.25% 0 1.25%;
 }
 
 .m-wrapper div,
 .m-wrapper footer
 {
 	width: 97.5%;
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 	padding: 15px 1.25%;
 	border: 1px solid #ccc;
 	border-radius: 5px;
