@@ -5,6 +5,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if($path == '/assets/js/v0.1-dev.js'):
 	header('Content-type: application/x-javascript');
+	if(isset($_REQUEST['ver']) && $_REQUEST['ver'] == 'dev'):
 ?>
 (function ( $ )
 {
@@ -235,9 +236,10 @@ if($path == '/assets/js/v0.1-dev.js'):
 	});
 })( jQuery );
 <?php
+	endif;
 else:
 	header('Content-type: application/x-javascript');
-		if(isset($_REQUEST['param']) && $_REQUEST['param'] == 'dev'):
+		if(isset($_REQUEST['ver']) && $_REQUEST['ver'] == 'dev'):
 ?>
 /*!
  * jQuery JavaScript Library v3.0.0
