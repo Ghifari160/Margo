@@ -10,7 +10,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 <title>Margo: The Game | Template</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/assets/css/v0.1-dev.css">
-<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.js?param=dev"></script>
 <?php
 if($path == '/' || $path == '/game'):
 ?>
