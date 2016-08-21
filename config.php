@@ -20,9 +20,11 @@ define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 0);
 define('VMINOR', 1);
-define('VBUILD', 'ee6a');
+define('VBUILD', 'ba70');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');
+
+define('GS_BUCKET', 'margothegame.appspot.com');
 
 ?>

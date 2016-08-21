@@ -26,6 +26,10 @@ handlers:
   static_dir: assets/fonts
   secure: always
 
+- url: /images
+  script: images.php
+  secure: always
+
 - url: /.*
   script: main.php
   secure: always

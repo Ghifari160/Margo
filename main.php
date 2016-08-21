@@ -3,6 +3,7 @@ require_once "core.php";
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+checkForAdmin();
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -35,19 +36,46 @@ if($path == '/' || $path == '/game'):
 	<div class="m-game">
 		<canvas id="game-area"></canvas>
 	</div>
+<?php elseif($path == '/login'): ?>
+	<div class="m-ar">
 <?php
+if(isUserLoggedIn()):
+	getUserInfo();
+else:
+	gLoginBtn();
+endif;
+?>
+	</div>
+<?php
+elseif($path == '/adminonly'):
+	if(isAdminLoggedIn()):
+		echo '	<script>location.href = "/"</script>';
+	else:
+?>
+	<div class="m-err">
+		<div class="m-err large">Forbidden!</div>
+		<div class="m-err msg">
+			Admin only. <?php getRelogBtn(); ?> with another account.
+		</div>
+	</div>
+<?php
+	endif;
 else:
 ?>
-<div class="m-err">
-	<div class="m-err large">Error!</div>
-	<div class="m-err msg">
-		Invalid URL. This error has been recorded. Sorry for the inconvinience.
+	<div class="m-err">
+		<div class="m-err large">Error!</div>
+		<div class="m-err msg">
+			Invalid URL. This error has been recorded. Sorry for the inconvinience.
+		</div>
+		<div class="m-err link"><a href="/">Return to home</a></div>
 	</div>
-	<div class="m-err link"><a href="/">Return to home</a></div>
-</div>
 <?php endif; ?>
 
 	<footer class="m-footer">
+		<div class="m-acc">
+			<?php getUserInfo(); ?>
+
+		</div>
 		<div class="m-version">
 			<span data-italicize="margo">Margo: The Game</span> v<?php echo VMAJOR.".".VMINOR."-".VBUILD; ?>
 

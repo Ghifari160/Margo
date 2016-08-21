@@ -17,7 +17,7 @@ Margo: The Game is a secret project of [Ghifari160][github user ghifari160]. Thi
 - [ ] Codename: Eros
 - [ ] SendGrid integration for email notification
 - [ ] Skype or Hangouts integration?
-- [ ] Project security: admin only for the time being
+- [x] Project security: admin only for the time being
 
 ## Credits ##
 All of the backend and frontend work on this project is done by [Ghifari160][github user ghifari160]. From artwork all the way to every line of code.
