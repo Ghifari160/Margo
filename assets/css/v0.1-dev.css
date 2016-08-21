@@ -19,6 +19,7 @@
 body
 {
 	background: #f1f1f1;
+	font-family: 'Arial';
 }
 
 .m-header
@@ -119,11 +120,39 @@ body
 	color: #333;
 }
 
-.m-footer div
+.m-footer div,
+.m-err div
 {
 	width: auto;
 	margin-bottom: 0;
 	padding: 0;
 	border: none;
 	background: transparent;
+}
+
+.m-err
+{
+	width: 100%;
+	background: #df3e3e !important;
+	color: #fff;
+}
+
+.m-err .large
+{
+	font-size: 50px;
+}
+
+.m-err a,
+.m-err a:visited,
+.m-err a:hover,
+.m-err a:active
+{
+	color: #fff;
+	text-decoration: underline;
+}
+
+.m-err a:hover,
+.m-err a:active
+{
+	text-decoration: none;
 }
