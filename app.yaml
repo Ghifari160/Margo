@@ -7,18 +7,28 @@ threadsafe: yes
 handlers:
 - url: /assets/js/.*
   script: js.php
+  secure: always
+
+- url: /assets/js/static
+  static_dir: assets/js/static
+  secure: always
+  application_readable: true
 
 - url: /assets/css
   static_dir: assets/css
+  secure: always
 
 - url: /assets/images
   static_dir: assets/images
+  secure: always
 
 - url: /assets/fonts
   static_dir: assets/fonts
+  secure: always
 
 - url: /.*
   script: main.php
+  secure: always
 
 skip_files:
 - ^(.*/)?.*\.psd$
