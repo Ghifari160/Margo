@@ -29,5 +29,5 @@ All quotes used are taken from one of the best books ever. Quotes are subject to
 
 [github user ghifari160]: https://www.github.com/Ghifari160 "View Ghifari160 on GitHub"
 [Google Cloud Platform]: https://cloud.google.com
-[margo via being the one]: http://margo.beingthe.one "Margo via Being the One (Prefered)"
-[margo via ghifari160]: http://margo.ghifari160.com "Margo via Ghifari160"
+[margo via being the one]: https://margo.beingthe.one "Margo via Being the One (Prefered)"
+[margo via ghifari160]: https://margo.ghifari160.com "Margo via Ghifari160"
