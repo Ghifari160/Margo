@@ -77,7 +77,7 @@ else:
 
 		</div>
 		<div class="m-version">
-			<span data-italicize="margo">Margo: The Game</span> v<?php echo VMAJOR.".".VMINOR."-".VBUILD; ?>
+			<span class="m-title" data-italicize="margo">Margo: The Game</span> v<?php echo VMAJOR.".".VMINOR."-".VBUILD; ?>
 
 		</div>
 		<div class="m-copy">

@@ -136,6 +136,18 @@ body
 	color: #333;
 }
 
+.m-footer .m-title,
+.m-footer .m-title i
+{
+	font-family: 'Open sans';
+	font-style: normal;
+}
+
+.m-footer .m-title i
+{
+	font-style: italic;
+}
+
 .m-footer div,
 .m-err div
 {

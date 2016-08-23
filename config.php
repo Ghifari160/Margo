@@ -1,5 +1,4 @@
 <?php
-
 define('FRAMEWORK_VER', 1);
 
 define('APP_ID', 'margothegame'); // App ID. If using Google Cloud Platform, enter Project ID
@@ -20,11 +19,10 @@ define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 0);
 define('VMINOR', 1);
-define('VBUILD', 'ba70');
+define('VBUILD', 'd1f3');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');
 
 define('GS_BUCKET', 'margothegame.appspot.com');
-
 ?>

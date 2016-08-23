@@ -11,7 +11,7 @@ if($path == '/assets/js/v0.1-dev.js'):
 {
 	$.refreshText = function()
 	{
-		$('div').each(function()
+		$('div,span,a').each(function()
 		{
 			if($(this).data('italicize') == "margo")
 			{
@@ -184,7 +184,7 @@ if($path == '/assets/js/v0.1-dev.js'):
 
 	function loadingToTitle()
 	{
-		var $title = $('.m-title');
+		var $title = $('.m-header .m-title');
 
 		$title.text("Margo: The Game").data("italicize", "margo");
 		$.refreshText();
@@ -193,7 +193,7 @@ if($path == '/assets/js/v0.1-dev.js'):
 	function titleToLoading()
 	{
 		var counter = 0,
-			$title = $('.m-title'),
+			$title = $('.m-header .m-title'),
 			animation;
 
 		$title.removeAttr('data-italicize').text("Loading");

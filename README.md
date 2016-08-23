@@ -18,6 +18,7 @@ Margo: The Game is a secret project of [Ghifari160][github user ghifari160]. Thi
 - [ ] SendGrid integration for email notification
 - [ ] Skype or Hangouts integration?
 - [x] Project security: admin only for the time being
+- [ ] Project security: switch from App Engine User Service API to Google Identity API
 
 ## Credits ##
 All of the backend and frontend work on this project is done by [Ghifari160][github user ghifari160]. From artwork all the way to every line of code.
