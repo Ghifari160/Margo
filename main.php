@@ -3,7 +3,18 @@ require_once "core.php";
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-checkForAdmin();
+app_cookieCleanup();
+
+if(!isUserLoggedIn() && $path !== "/login" && $path !== "/adminonly"
+	&& $path !== "/e")
+	header('location: /login');
+else if(!isAdminLoggedIn() && $path !== "/login" && $path !== "/adminonly"
+	&& $path !== "/e")
+	header('location: /adminonly');
+else if(isUserLoggedIn() && $path == "/login")
+	header('location: /');
+else if(isAdminLoggedIn() && $path == "/adminonly")
+	header('location: /');
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -38,28 +49,30 @@ if($path == '/' || $path == '/game'):
 	</div>
 <?php elseif($path == '/login'): ?>
 	<div class="m-ar">
-<?php
-if(isUserLoggedIn()):
-	getUserInfo();
-else:
-	gLoginBtn();
-endif;
-?>
+		<?php gLoginBtn(); ?>
+
 	</div>
 <?php
 elseif($path == '/adminonly'):
-	if(isAdminLoggedIn()):
-		echo '	<script>location.href = "/"</script>';
-	else:
 ?>
 	<div class="m-err">
 		<div class="m-err large">Forbidden!</div>
 		<div class="m-err msg">
-			Admin only. <?php getRelogBtn(); ?> with another account.
+			Admin, developers, and testers only. <?php getRelogBtn(); ?> with another account.
 		</div>
 	</div>
 <?php
-	endif;
+elseif($path == '/e' && isset($_REQUEST['p']) && $_REQUEST['p'] !== "" &&
+	$_REQUEST['p'] !== NULL):
+?>
+	<div class="m-err">
+		<div class="m-err large">Login Error!</div>
+		<div class="m-err msg">
+			<?php decodeLoginError($_REQUEST['p']); ?>. Sorry for the inconvinience.
+			<?php getRelogBtn(); ?> with another account.
+		</div>
+	</div>
+<?php
 else:
 ?>
 	<div class="m-err">
@@ -72,7 +85,7 @@ else:
 <?php endif; ?>
 
 	<footer class="m-footer">
-		<div class="m-acc">
+		<div class="m-acc" data-m-param="user-info">
 			<?php getUserInfo(); ?>
 
 		</div>

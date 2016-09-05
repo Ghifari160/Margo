@@ -216,6 +216,12 @@ body
 	margin: 0 auto;
 }
 
+button.m-btn.m-login
+{
+	display: block;
+	height: 40px;
+}
+
 .m-btn.m-login.g
 {
 	height: 24px;

@@ -5,6 +5,10 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
 - url: /assets/js/.*
   script: js.php
   secure: always
@@ -28,6 +32,14 @@ handlers:
 
 - url: /images
   script: images.php
+  secure: always
+
+- url: /auth
+  script: login.php
+  secure: always
+
+- url: /dev\..*
+  script: devtools.php
   secure: always
 
 - url: /.*

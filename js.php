@@ -235,6 +235,16 @@ if($path == '/assets/js/v0.1-dev.js'):
 		console.log("Done!");
 	});
 })( jQuery );
+
+function escapeHtml(unsafe)
+{
+	return unsafe
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#39;");
+}
 <?php
 	endif;
 else:
