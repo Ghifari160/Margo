@@ -22,15 +22,11 @@ handlers:
   static_dir: assets/css
   secure: always
 
-- url: /assets/images
-  static_dir: assets/images
-  secure: always
-
 - url: /assets/fonts
   static_dir: assets/fonts
   secure: always
 
-- url: /images
+- url: /assets/images.*
   script: images.php
   secure: always
 
@@ -40,6 +36,18 @@ handlers:
 
 - url: /dev\..*
   script: devtools.php
+  secure: always
+
+- url: /app.*
+  script: meta.php
+  secure: always
+
+- url: /trivia.*
+  script: trivia.php
+  secure: always
+
+- url: /browserconfig.xml
+  script: meta.php
   secure: always
 
 - url: /.*

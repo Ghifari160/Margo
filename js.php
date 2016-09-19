@@ -1,5 +1,5 @@
 <?php
-require_once "config.php";
+require_once "core.php";
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -21,6 +21,22 @@ if($path == '/assets/js/v0.1-dev.js'):
 				{
 						return "<i>" + x + "</i>";
 				}));
+			}
+		});
+
+		$('title').each(function()
+		{
+			if($(this).data('italicize') == "margo")
+			{
+				var txt = $(this).text();
+
+				$(this).html(
+					txt.replace(/a/g, "𝘢")
+						.replace(/i/g, "𝘪")
+						.replace(/u/g, "𝘶")
+						.replace(/e/g, "𝘦")
+						.replace(/o/g, "𝘰")
+				);
 			}
 		});
 	}
@@ -134,7 +150,8 @@ if($path == '/assets/js/v0.1-dev.js'):
 						clearInterval(animation);
 						if(callback != "na")
 							callback(callback);
-					}				}
+					}
+				}
 			}
 
 			if(mh)
@@ -216,7 +233,6 @@ if($path == '/assets/js/v0.1-dev.js'):
 	$(document).ready(function()
 	{
 		$.refreshText();
-
 <?php if(!isset($_REQUEST['param']) || $_REQUEST['param'] == "" || $_REQUEST['param'] == NULL): ?>
 		$('#ribbon-bg').initializeCanvas({ width: "100%" });
 
@@ -232,6 +248,45 @@ if($path == '/assets/js/v0.1-dev.js'):
 
 <?php endif; ?>
 
+		$('.m-game .trivia .answers .answer').click(function()
+		{
+			$(this).parent().find('.answer .radio').each(function()
+			{
+				$(this).removeClass('checked').attr('data-mgame', '');;
+			});
+
+			$(this).find('.radio').addClass('checked')
+				.attr('data-mgame', 'checked');
+			$(this).parent()
+				.find('input[name=' + $(this).parent().attr('id') + ']').val(
+					$(this).attr('id')
+			);
+
+			$(this).parent().parent().find('.submit .m-btn')
+				.attr('data-mgame', 'visible');
+		});
+
+		$('.m-game .trivia .submit .m-btn').click(function()
+		{
+			var val = $(this).parent().parent()
+				.find('.answers input[name='
+				+ $(this).parent().parent().find('.answers').attr('id')
+				+ ']').val();
+
+			$.ajax({
+				url: $(this).parent().parent().parent().attr('action'),
+				type: $(this).parent().parent().parent().attr('method'),
+				data: $(this).parent().parent().find('.answers').attr('id')
+					+ '=' + val,
+				success: function(data)
+				{
+
+				}
+			});
+
+			$(this).attr('data-mgame', 'hidden');
+		});
+
 		console.log("Done!");
 	});
 })( jQuery );
@@ -245,6 +300,509 @@ function escapeHtml(unsafe)
 				.replace(/"/g, "&quot;")
 				.replace(/'/g, "&#39;");
 }
+
+function readjustPopupDiv()
+{
+	$('.m-popup').css({
+		'top': (($(window).height() - $('.m-popup').height() - 20) / 2) + 'px',
+		'left': (($(window).width() - $('.m-popup').width() - 20) / 2) + 'px'
+	});
+
+	$('.m-popup .content').css({
+		'max-height': ($(window).height() * .8 - $('.m-popup .title').height()
+		 	- $('.m-popup .buttons').height()) + 'px'
+	});
+}
+
+function toggleErosResponse()
+{
+	if($('.m-popup').attr('data-state') == "erosresp")
+	{
+		$('.m-modal').attr('data-mgame', 'hidden');
+		$('.m-popup').removeAttr('data-state').removeAttr('style')
+			.attr('data-mgame', 'hidden').html('');
+	}
+	else
+	{
+<?php if(isAdminLoggedIn()): ?>
+		$('.m-modal').attr('onclick', 'toggleErosResponse();')
+		.attr('data-mgame', 'visible');
+<?php else: ?>
+		$('.m-modal').attr('data-mgame', 'visible');
+<?php endif; ?>
+
+		$('.m-popup').html(
+			'<div class="title" data-italicize="margo">Margo: The Game</div>'
+
+			+ '<div class="content">'
+			+ '<p>Hi, <span style="font-family: \'Open sans\';">Veronica</span>'
+			+ '</p>'
+			+ '<p>You have reached the end of <span data-italicize="margo"'
+			+ ' style="font-family: \'Open sans\';"> Margo: The Game</span>.'
+			+ ' Please use one of the buttons below to respond.</p>'
+			+ '</div>'
+
+			+ '<div class="buttons centered">'
+			+ '<div class="m-btn" id="hangouts"></div>'
+			+ '</div>'
+		);
+
+		gapi.hangout.render('hangouts',
+		{
+			'render': 'createhangout',
+			'invites': [
+				{
+					'id': '***',
+					'type': 'PROFILE'
+				}
+			]
+		});
+
+		$.refreshText();
+		readjustPopupDiv();
+
+		$('.m-popup').attr('data-mgame', 'visible')
+			.attr('data-state', 'erosresp');
+	}
+}
+
+<?php if(isAdminLoggedIn()):?>
+function toggleTest()
+{
+	if($('.m-popup').attr('data-state') == "test")
+	{
+		$('.m-modal').attr('data-mgame', 'hidden');
+		$('.m-popup').removeAttr('data-state').removeAttr('style')
+			.attr('data-mgame', 'hidden').html('');
+	}
+	else
+	{
+		$('.m-modal').attr('onclick', 'toggleAdminTools();')
+		.attr('data-mgame', 'visible');
+
+		$('.m-popup').html(
+			'<div class="title">Popup Scroll Test</div>'
+
+			+ '<div class="content">'
+			+ '<ul class="invlist">'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '<li>aaaaaaa</li>'
+			+ '</ul>'
+			+ '</div>'
+
+			+ '<div class="buttons">'
+			+ '<button class="m-btn centered close" onclick="toggleTest();">'
+			+ 'Close</button>'
+			+ '</div>'
+		)
+		.attr('data-mgame', 'visible').attr('data-state', 'test');
+
+		readjustPopupDiv();
+	}
+
+	return false;
+}
+
+function toggleAdminTools()
+{
+	if($('.m-popup').attr('data-state') == "admintools")
+	{
+		$('.m-modal').attr('data-mgame', 'hidden');
+		$('.m-popup').removeAttr('data-state').removeAttr('style')
+			.attr('data-mgame', 'hidden').html('');
+	}
+	else
+	{
+		$('.m-modal').attr('onclick', 'toggleAdminTools();')
+		.attr('data-mgame', 'visible');
+
+		$('.m-popup').html(
+			'<div class="title">Admin/Developer Tools</div>'
+
+			+ '<div class="content">'
+			+ '<ul class="invlist">'
+			+ '<li><a href="/">Main Page</a></li>'
+			+ '<li><a href="/eros">Eros</a></li>'
+			+ '<li><a href="#" onclick="toggleErosResponse();">'
+			+ 'Eros Response</a></li>'
+			+ '<li><a href="/adminonly?force=1">Error: Admin Only</a></li>'
+			+ '<li><a href="/invalid+url">Error: Invalid URL</a><li>'
+			+ '<li><a href="/login?force=1">Login Page</a></li>'
+			+ '<li><a href="#" onclick="toggleTest();">Test</a></li>'
+			+ '</ul>'
+			+ '</div>'
+
+			+ '<div class="buttons">'
+			+ '<button class="m-btn centered" onclick="toggleAdminTools();">'
+			+ 'Close</button>'
+			+ '</div>'
+		)
+		.attr('data-mgame', 'visible').attr('data-state', 'admintools');
+
+		readjustPopupDiv();
+	}
+
+	return false;
+}
+<?php endif; ?>
 <?php
 	endif;
 else:

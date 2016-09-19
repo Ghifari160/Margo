@@ -18,6 +18,51 @@ function app_getLicense()
 	echo "Distributed under the terms of the <a href=\"about/licenses\">".APP_LICENSE."</a>\n";
 }
 
+function app_getFavicons()
+{
+	$pat = "<link rel=\"apple-touch-icon\" sizes=\"%sx%s\" href=\"%s\">\n";
+	$pat2 = "<link rel=\"icon\" type=\"image/png\" sizes=\"%sx%s\" href=\"%s\">\n";
+	$pat3 = "<meta name=\"msapplication-Tile%s\" content=\"%s\">\n";
+	$str = "";
+
+	// Apple Icons
+	$str .= sprintf($pat, 57, 57, getImage("Logo-1240.png", 57));
+	$str .= sprintf($pat, 60, 60, getImage("Logo-1240.png", 60));
+	$str .= sprintf($pat, 72, 72, getImage("Logo-1240.png", 72));
+	$str .= sprintf($pat, 76, 76, getImage("Logo-1240.png", 76));
+	$str .= sprintf($pat, 114, 114, getImage("Logo-1240.png", 114));
+	$str .= sprintf($pat, 120, 120, getImage("Logo-1240.png", 120));
+	$str .= sprintf($pat, 144, 144, getImage("Logo-1240.png", 144));
+	$str .= sprintf($pat, 152, 152, getImage("Logo-1240.png", 152));
+
+	// Hi-res PNGs
+	$str .= sprintf($pat2, 16, 16, getImage("Logo-1240.png", 16));
+	$str .= sprintf($pat2, 32, 32, getImage("Logo-1240.png", 32));
+	$str .= sprintf($pat2, 96, 96, getImage("Logo-1240.png", 96));
+	$str .= sprintf($pat2, 160, 160, getImage("Logo-1240.png", 160));
+	$str .= sprintf($pat2, 196, 196, getImage("Logo-1240.png", 196));
+
+	// Microsoft Tiles
+	$str .= sprintf($pat3, "Color", "#ffffff");
+	$str .= sprintf($pat3, "Image", getImage("Logo-1240.png", 144));
+
+	echo $str;
+}
+
+function getImage($image, $size, $crop = false)
+{
+	$options = [
+		'size' => $size,
+		'crop' => $crop,
+		'secure_url' => true
+	];
+	$path = gs_getBucketPath($image);
+
+	$url = CloudStorageTools::getImageServingUrl($path, $options);
+
+	return $url;
+}
+
 function author_getNameUrl()
 {
 	echo "<a href=\"".AUTHOR_URL."\" target=\"".APP_ID."\">".AUTHOR_NAME."</a>";
@@ -354,6 +399,7 @@ function getUserInfo()
 		$usr_nm = "";
 		$logout = "";
 		$endpoint = getUserEndPoint();
+		$admin = false;
 
 		if($endpoint == "google")
 		{
@@ -368,7 +414,20 @@ function getUserInfo()
 			$logout = gLogoutBtn();
 		}
 
-		echo sprintf($str, $usr_lvl, $usr_nm, $logout);
+		if(ADMIN_DEF && $usr_lvl = "ADMIN")
+		{
+			echo sprintf($str,
+				"<a href=\"#\" onclick=\"toggleAdminTools();\">".$usr_lvl."</a>",
+				$usr_nm, $logout);
+		}
+		else if(ADMIN_DEF == false && $usr_lvl !== "VIOLET")
+		{
+			echo sprintf($str,
+				"<a href=\"#\" onclick=\"toggleAdminTools();\">".$usr_lvl."</a>",
+				$usr_nm, $logout);
+		}
+		else
+			echo sprintf($str, $usr_lvl, $usr_nm, $logout);
 	}
 	else
 		echo "<a href=\"/login\">Sign in</a>";
@@ -400,12 +459,23 @@ function gLogoutBtn()
 	return sprintf($msg, gapi_createLogoutUrl());
 }
 
-function serveImg($path)
+// function serveImg($path)
+// {
+// 	$options = ['size' => 18, 'crop' => false, 'secure_url' => true];
+// 	$image_file = "gs://".GS_BUCKET."/".$path;
+// 	$image_url = CloudStorageTools::getImageServingUrl($image_file, $options);
+// 	echo $image_url;
+// }
+
+function createLoginUrl($redir = "/")
 {
-	$options = ['size' => 18, 'crop' => false, 'secure_url' => true];
-	$image_file = "gs://".GS_BUCKET."/".$path;
-	$image_url = CloudStorageTools::getImageServingUrl($image_file, $options);
-	echo $image_url;
+	$base = "/login";
+	$param = "?redir=";
+
+	if($redir !== "/" && $redir !== "/home" && $redir !== "/game")
+		$base .= $param.urlencode($redir);
+
+	return $base;
 }
 
 function decodeLoginError($param)
@@ -438,9 +508,91 @@ function decodeLoginError($param)
 			$msg = "Endpoint error for 'google'";
 			break;
 
+		case 6:
+			$msg = "Invalid session for trivia.";
+			break;
+
+		case 7:
+			$msg = "Invalid state for trivia.";
+			break;
+
 		default:
 	}
 
 	echo $msg.".";
+}
+
+function getExtraTitle()
+{
+	$path = getPath();
+	$ret = "";
+
+	if($path == "/")
+		$path = "home";
+	else
+		$path = substr($path, 1);
+
+	switch($path)
+	{
+		case "eros":
+			$ret = "Eros";
+			break;
+
+		case "login":
+			$ret = "Sign in";
+			break;
+
+		case "home":
+		case "game":
+			$ret = "{N.A}";
+			break;
+
+		case "adminonly":
+		case "e":
+		default:
+			$ret = "Error!";
+	}
+
+	if($ret !== "{N.A}")
+	{
+
+		echo " | ".$ret;
+	}
+}
+
+function genid($hex = true)
+{
+	$chars = "";
+	$len = 8;
+	$id = "";
+
+	if($hex)
+		$chars = "0123456789abcdef";
+	else
+		$chars = "0123456789";
+
+	for($i = 0; $i < $len; $i++)
+	{
+		$id .= $chars[mt_rand(0, (strlen($chars)-1))];
+	}
+
+	return $id;
+}
+
+function shuffle_assoc($array)
+{
+	if(!is_array($array))
+		return $array;
+
+	$keys = array_keys($array);
+	shuffle($keys);
+
+	$random = array();
+	foreach($keys as $key)
+	{
+		$random[$key] = $array[$key];
+	}
+
+	return $random;
 }
 ?>

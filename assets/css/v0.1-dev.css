@@ -38,6 +38,20 @@ body
 	font-family: 'Arial';
 }
 
+a,
+a:visited,
+a:hover,
+a:active
+{
+	color: #365899;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
 .m-header
 {
 	position: fixed;
@@ -109,6 +123,122 @@ body
 {
 	width: 100%;
 	height: 100%;
+}
+
+.m-game .trivia
+{
+	display: table;
+	min-width: 10px;
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+.m-game .trivia .question div
+{
+	font-family: 'Open sans';
+	font-size: 18px;
+}
+
+.m-game .trivia .question blockquote
+{
+	display: block;
+	width: 95%;
+	max-height: 300px;
+	font-family: 'Times new roman';
+	font-size: 16px;
+	background: #f1f1f1;
+	color: #666;
+	border-left: 5px solid #ccc;
+	margin: 5px 0;
+	padding: 10px 0 10px 5%;
+	overflow: auto;
+}
+
+.m-game .trivia .answers .answer
+{
+	display: block;
+	font-family: 'Open sans';
+	font-size: 16px;
+	padding: 5px 0;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.m-game .trivia .answers .answer .label
+{
+	display: inline-block;
+	height: 22px;
+	vertical-align: middle;
+	cursor: default;
+}
+
+.m-game .trivia .answers .answer .radio
+{
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.m-game .trivia .answers .answer .radio .outer-circle
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: 2px solid #666;
+}
+
+.m-game .trivia .answers .answer .radio.checked:not(.disabled) .outer-circle
+{
+	border-color: #7100ab;
+}
+
+.m-game .trivia .answers .answer .radio .inner-circle
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	border: 5px solid #666;
+	transform: translateX(-50%) translateY(-50%) scale(0);
+	transition: transform ease .25s;
+}
+
+.m-game .trivia .answers .answer .radio.checked:not(.disabled) .inner-circle
+{
+	transform: translateX(-50%) translateY(-50%) scale(1);
+}
+
+.m-game .trivia .answers .answer .radio.checked:not(.disabled) .inner-circle
+{
+	border-color: #7100ab;
+}
+
+.m-game .trivia .answers .answer i
+{
+	font-style: italic;
+}
+
+.m-game .trivia .submit .m-btn
+{
+	display: table;
+	margin: 0 auto;
+	transform: scale(0);
+	transition: transform ease .25s;
+}
+
+.m-game .trivia .submit .m-btn[data-mgame="visible"]
+{
+	transform: scale(1);
 }
 
 .m-footer
@@ -186,14 +316,33 @@ body
 }
 
 
-.m-btn
+.m-btn,
+div.m-btn
 {
 	display: table;
 	min-width: 75px;
-	padding: 10px;
+	height: 24px;
+	padding: 8px;
 	background: #2196f3;
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+	color: #fff;
+	text-decoration: none;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+button.m-btn
+{
+	display: inline-table;
+	box-sizing: content-box;
+	margin-right: 30px;
+	border: none;
+	cursor: pointer;
+}
+
+a.m-btn
+{
 	color: #fff;
 	text-decoration: none;
 }
@@ -233,4 +382,105 @@ button.m-btn.m-login
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 24px;
+}
+
+#yt-player
+{
+	display: table;
+	margin: 0 auto;
+}
+
+.m-modal
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	opacity: .3;
+	transform: scale(0);
+	transition: transform ease .5s;
+}
+
+.m-modal[data-mgame="visible"]
+{
+	transform: scale(1);
+}
+
+.m-popup
+{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 250px;
+	max-width: 600px;
+	min-height: 50px;
+	max-height: 80%;
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	word-wrap: break-word;
+	transform: scale(0);
+	transition: transform ease .5s;
+}
+
+.m-popup[data-mgame="visible"]
+{
+	transform: scale(1);
+}
+
+.m-popup .title
+{
+	font-family: "Open sans";
+	font-size: 18px;
+	text-align: center;
+	margin: 0 0 5px 0;
+}
+
+.m-popup .content
+{
+	overflow-y: auto;
+}
+
+.m-popup .content::-webkit-scrollbar,
+.m-game .trivia .question blockquote::-webkit-scrollbar
+{
+	width: 4px;
+	height: 4px;
+}
+
+.m-popup .content::-webkit-scrollbar-thumb,
+.m-game .trivia .question blockquote::-webkit-scrollbar-thumb
+{
+	background: rgba(0,0,0,.26);
+}
+
+.m-popup ul.invlist
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.m-popup ul.invlist li
+{
+	padding: 0 0 3px 0;
+}
+
+.m-popup .centered
+{
+	display: table;
+	min-width: 50px;
+	margin: 0 auto;
+}
+
+div.hidden,
+div.m-btn.hidden,
+span.hidden,
+blockquote.hidden,
+.hidden
+{
+	display: none;
 }

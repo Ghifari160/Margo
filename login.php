@@ -50,6 +50,7 @@ else if($_REQUEST['p'] == "g")
 			unset($_SESSION['gapi_lstate']);
 
 			$gapi_backend = "https://www.googleapis.com/oauth2/v4/token";
+			$redirUrl = "/";
 
 			$params = array(
 				'code' => urlencode($_REQUEST['code']),
@@ -87,7 +88,13 @@ else if($_REQUEST['p'] == "g")
 					setcookie('mgame_g_access_token', $rJson['access_token'],
 						time() + $rJson['expires_in'], '/');
 
-					header('location: /');
+					if(isset($_SESSION['login_redir']))
+					{
+						$redirUrl = base64_decode($_SESSION['login_redir']);
+						unset($_SESSION['login_redir']);
+					}
+
+					header('location: '.$redirUrl.'');
 				}
 				else
 					loginErr(2);

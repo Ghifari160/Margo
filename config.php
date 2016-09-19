@@ -18,17 +18,14 @@ define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 0);
 define('VMINOR', 1);
-define('VBUILD', '2441');
+define('VBUILD', '737b0165');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');
 
 define('GS_BUCKET', 'margothegame.appspot.com');
-
-// Google API informations has been redacted from this commit.
-define('GAPI_REDIR_PREFIX', '');
-define('GAPI_CLIENT_ID', '');
-define('GAPI_CLIENT_SECRET', '');
+define('GAPI_REDIR_PREFIX', '***');
+define('GAPI_CLIENT_SECRET', '***');
 
 define('ADMIN_DEF', false); // Strict mode: true, non-strict mode: false
 
@@ -37,28 +34,26 @@ function g_whitelist()
 // Allowed perms: admin, whitelist, tester, violet
 // strict mode: admin
 // non-strict mode: admin, dev, tester
-
-// Whitelist entry has been redacted from this commit
 	$whitelist = array(
 		'***' => array(
 			'perms' => 'admin',
-			'email' => '***@gmail.com'
+			'email' => 'ghi***@gmail.com'
 		),
-		'temp_1' => array(
+		'***' => array(
 			'perms' => 'dev',
-			'email' => '***@s207.org'
+			'email' => 'gad***@s207.org'
 		),
-		'temp_2' => array(
+		'***' => array(
 			'perms' => 'tester',
-			'email' => '***@s207.org'
+			'email' => 'dpa***@s207.org'
 		),
-		'temp_3' => array(
+		'***' => array(
 			'perms' => 'tester',
-			'email' => '***@s207.org'
+			'email' => 'dro***@s207.org'
 		),
-		'temp_4' => array(
+		'***' => array(
 			'perms' => 'violet',
-			'email' => '***@gmail.com'
+			'email' => 'olym***@gmail.com'
 		)
 	);
 
