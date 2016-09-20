@@ -43,25 +43,11 @@ endif;
 if($path == '/eros'):
 ?>
 <script src="https://apis.google.com/js/api.js"></script>
-<?php
-elseif($path == "/game" || $path == "/"):
-?>
-<script>
-	loadTrivia();
-</script>
 <?php endif; ?>
 <script src="https://apis.google.com/js/platform.js"></script>
 </head>
 
 <body>
-<div class="m-modal" data-mgame="visible"></div>
-<div class="m-popup" data-state="wait" data-mgame="visible">
-	<div class="title">Please Wait...</div>
-	<div class="content"></div>
-	<div class="buttons"></div>
-	<script>readjustPopupDiv();</script>
-</div>
-
 <header class="m-header">
 	<canvas id="ribbon-bg"></canvas>
 	<div class="m-title" data-italicize="margo">Margo: The Game</div>
@@ -72,7 +58,64 @@ elseif($path == "/game" || $path == "/"):
 if($path == '/' || $path == '/game'):
 ?>
 	<div class="m-game">
-		<canvas id="game-area"></canvas>
+		<!-- <canvas id="game-area"></canvas> -->
+		<form action="http://margo.dev.beingthe.one:8091/#" target="_self" method="POST" enctype="application/x-www-form-urlencoded">
+			<div class="trivia">
+				<div class="question">
+					<div>The following is an excerpt from a book</div>
+					<blockquote>
+						Harry — yer a wizard.
+					</blockquote>
+					<div>What is the title of this book?</div>
+				</div>
+				<div class="answers" id="ffff">
+					<div class="answer" id="3fb5">
+						<div class="radio">
+							<div class="outer-circle">
+								<div class="inner-circle"></div>
+							</div>
+						</div>
+						<div class="label">
+							<i>Harry Potter and the Sorcerer's Stone</i>
+						</div>
+					</div>
+					<div class="answer" id="feda">
+						<div class="radio">
+							<div class="outer-circle">
+								<div class="inner-circle"></div>
+							</div>
+						</div>
+						<div class="label">
+							<i>Harry Potter and the Half Blood Prince</i>
+						</div>
+					</div>
+					<div class="answer" id="afe9">
+						<div class="radio">
+							<div class="outer-circle">
+								<div class="inner-circle"></div>
+							</div>
+						</div>
+						<div class="label">
+							<i>Harry Potter and the Order of the Phoenix</i>
+						</div>
+					</div>
+					<div class="answer" id="99ea">
+						<div class="radio">
+							<div class="outer-circle">
+								<div class="inner-circle"></div>
+							</div>
+						</div>
+						<div class="label">
+							<i>Nightfall</i>
+						</div>
+					</div>
+					<input type="hidden" name="ffff" id="vffff">
+				</div>
+				<div class="submit">
+					<div class="m-btn hidden">Next Question</div>
+				</div>
+			</div>
+		</form>
 	</div>
 <?php
 elseif($path == '/eros'):
@@ -82,7 +125,7 @@ elseif($path == '/eros'):
 	</div>
 
 	<script>
-		var height = 575,
+		var height = $(".m-game").height(),
 			width = Math.round(height * 16 / 9);
 
 		var tag = document.createElement('script');
@@ -97,7 +140,7 @@ elseif($path == '/eros'):
 			{
 				width: width,
 				height: height,
-				videoId: 'nBsTSz4yIMo',
+				videoId: 'EkmzbxiB7rg',
 				events:
 				{
 					'onReady': onPlayerReady,
@@ -120,7 +163,6 @@ elseif($path == '/eros'):
 
 		function onPlayerReady(event)
 		{
-			toggleWait();
 			event.target.playVideo();
 		}
 
@@ -191,7 +233,8 @@ else:
 		</div>
 	</footer>
 </div>
-<?php if($path !== "/eros"): ?>
-<script>toggleWait();</script>
-<?php endif; ?></body>
+
+<div class="m-modal"></div>
+<div class="m-popup"></div>
+</body>
 </html>

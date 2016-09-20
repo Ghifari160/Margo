@@ -107,7 +107,7 @@ a:hover
 
 .m-game
 {
-	min-height: 100px;
+	height: 575px;
 }
 
 .m-game div
@@ -125,54 +125,18 @@ a:hover
 	height: 100%;
 }
 
-.m-game .trivia-result
-{
-	display: block;
-	height: 40px;
-	padding: 10px;
-	font-family: 'Open sans';
-	font-size: 25px;
-	line-height: 40px;
-	text-align: center;
-	margin-bottom: 10px;
-	transform: scale(1);
-	transition: transform ease .25s;
-}
-
-.m-game .trivia-result[data-mgame="hidden"]
-{
-	transform: scale(0);
-}
-
-.m-game .trivia-result.correct
-{
-	background: #e2f9e5;
-	color: #666;
-}
-
-.m-game .trivia-result.wrong
-{
-	background: #df3e3e;
-	color: #fff;
-}
-
 .m-game .trivia
 {
 	display: table;
 	min-width: 10px;
-	max-width: 600px;
+	max-width: 80%;
 	margin: 0 auto;
 }
 
-.m-game .trivia .question
+.m-game .trivia .question div
 {
 	font-family: 'Open sans';
 	font-size: 18px;
-}
-
-.m-game .trivia .answers .answer
-{
-	font-family: 'Open sans';
 }
 
 .m-game .trivia .question blockquote
@@ -437,7 +401,6 @@ button.m-btn.m-login
 	opacity: .3;
 	transform: scale(0);
 	transition: transform ease .5s;
-	z-index: 100;
 }
 
 .m-modal[data-mgame="visible"]
@@ -461,7 +424,6 @@ button.m-btn.m-login
 	word-wrap: break-word;
 	transform: scale(0);
 	transition: transform ease .5s;
-	z-index: 101;
 }
 
 .m-popup[data-mgame="visible"]
@@ -519,11 +481,6 @@ div.m-btn.hidden,
 span.hidden,
 blockquote.hidden,
 .hidden
-{
-	display: none;
-}
-
-pre.m-code
 {
 	display: none;
 }
