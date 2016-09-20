@@ -248,7 +248,7 @@ if($path == '/assets/js/v0.1-dev.js'):
 
 <?php endif; ?>
 
-		$('.m-game .trivia .answers .answer').click(function()
+		$('.m-game').on('click', '.trivia .answers .answer', function()
 		{
 			$(this).parent().find('.answer .radio').each(function()
 			{
@@ -266,12 +266,14 @@ if($path == '/assets/js/v0.1-dev.js'):
 				.attr('data-mgame', 'visible');
 		});
 
-		$('.m-game .trivia .submit .m-btn').click(function()
+		$('.m-game').on('click', '.trivia .submit .m-btn', function()
 		{
 			var val = $(this).parent().parent()
 				.find('.answers input[name='
 				+ $(this).parent().parent().find('.answers').attr('id')
 				+ ']').val();
+
+			toggleWait();
 
 			$.ajax({
 				url: $(this).parent().parent().parent().attr('action'),
@@ -280,7 +282,8 @@ if($path == '/assets/js/v0.1-dev.js'):
 					+ '=' + val,
 				success: function(data)
 				{
-
+					toggleWait();
+					$('.m-game').html(data);
 				}
 			});
 
@@ -290,6 +293,38 @@ if($path == '/assets/js/v0.1-dev.js'):
 		console.log("Done!");
 	});
 })( jQuery );
+
+function loadTrivia()
+{
+	$.ajax({
+		url: "/trivia/new",
+		type: "POST",
+		data: "",
+		success: function(data)
+		{
+			$('.m-game').html(data);
+		},
+		error: function(data)
+		{
+			$('.m-game').html(data);
+		}
+	})
+}
+
+function mgameCheckForCodes()
+{
+	$('pre').each(function()
+	{
+		if($(this).html() == "{TRIVIA.NEXTGAME}")
+		{
+			setTimeout(function()
+			{
+				toggleWait();
+				location.href = "/eros";
+			}, 2000);
+		}
+	});
+}
 
 function escapeHtml(unsafe)
 {
@@ -312,6 +347,31 @@ function readjustPopupDiv()
 		'max-height': ($(window).height() * .8 - $('.m-popup .title').height()
 		 	- $('.m-popup .buttons').height()) + 'px'
 	});
+}
+
+function toggleWait()
+{
+	if($('.m-popup').attr('data-state') == "wait")
+	{
+		$('.m-modal').attr('data-mgame', 'hidden');
+		$('.m-popup').removeAttr('data-state').removeAttr('style')
+			.attr('data-mgame', 'hidden').html('');
+	}
+	else
+	{
+		$('.m-modal').attr('data-mgame', 'visible');
+
+		$('.m-popup').html(
+			'<div class="title">Please Wait...</div>'
+			+ '<div class="content"></div>'
+			+ '<div class="buttons"></div>'
+		)
+		.attr('data-mgame', 'visible').attr('data-state', 'wait');
+
+		readjustPopupDiv();
+	}
+
+	return false;
 }
 
 function toggleErosResponse()
@@ -352,7 +412,7 @@ function toggleErosResponse()
 			'render': 'createhangout',
 			'invites': [
 				{
-					'id': '***',
+					//'id': '***',
 					'type': 'PROFILE'
 				}
 			]

@@ -18,13 +18,15 @@ define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 0);
 define('VMINOR', 1);
-define('VBUILD', '737b0165');
+define('VBUILD', 'c21fc292');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');
 
 define('GS_BUCKET', 'margothegame.appspot.com');
+
 define('GAPI_REDIR_PREFIX', '***');
+define('GAPI_CLIENT_ID', '***');
 define('GAPI_CLIENT_SECRET', '***');
 
 define('ADMIN_DEF', false); // Strict mode: true, non-strict mode: false
