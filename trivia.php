@@ -50,6 +50,35 @@ $trivia = array(
 				'c0cec434' => '<i>Twilightfall</i>',
 				'bf24ac61' => '<i>Noonfall</i>'
 			)
+		),
+		'4619b322' => array(
+			'q' => "The following is an excerpt from <i>Nightfall</i>\n"
+				."<blockquote>\n<b>THE HOUSES MUST BE WITHOUT STAIN.<br>LEAVE"
+				." THEM AS THEY WERE.<br>COVER YOUR SCENT.<br>FLEE THE NIGHT OR"
+				." WE WILL COME FOR YOU.</b>\n</blockquote>\nWho are the"
+				." authors of <i>Nightfall</i>?",
+			'a' => array(
+				'495fcb2d' => "Jake Halpern and Peter Kujawinski",
+				'd91ccd77' => "J.K Rowling and Marieke Nijkamp",
+				'ec233d66' => "Charles Dickens and William Golding",
+				'e57724f3' => "Paula Hawkins and Ruth Ware"
+			)
+		),
+		'57e35aaf' => array(
+			'q' => "The following is an excerpt from <i>Nightfall</i> by J."
+				." Halpern and P. Kujawinski.\n<blockquote>\n<b>THE HOUSES MUST"
+				." BE WITHOUT STAIN.<br>LEAVE THEM AS THEY WERE.<br>COVER YOUR"
+				." SCENT.<br>FLEE THE NIGHT OR WE WILL COME FOR YOU.</b>\n"
+				."</blockquote>\nThe three main characters of the book saw"
+				." those words carved into the shield of the statue of a sea"
+				." hag while fleeing from a creature. The creature and their"
+				." kind built the town. What is the name of the town?",
+			'a' => array(
+				'2ddf9d01' => "Bliss",
+				'1959cfad' => "Desert Lands",
+				'6a29d90f' => "Northa",
+				'80a3f2c1' => "Aurora"
+			)
 		)
 	)
 );
@@ -217,16 +246,34 @@ else
 
 		if($aid == $state['question']['ca_id'])
 		{
-			echo "<div class=\"trivia-result\">Correct!</div>";
+			echo "<div class=\"trivia-result correct\">\nCorrect!\n"
+				."<script>\n"
+				."setTimeout(function(){\n"
+				."$('.m-game .trivia-result').attr('data-mgame', 'hidden');\n"
+				."}, 1500);\n"
+				."setTimeout(function(){\n"
+				."$('.m-game .trivia-result').remove();\n"
+				."}, 1800);\n"
+				."</script>\n"
+				."\n</div>";
 		}
 		else
 		{
-			echo "<div class=\"trivia-result\">\n"
+			echo "<div class=\"trivia-result wrong\">\n"
 				."Wrong! The correct answer was "
 				.$trivia[$state['section_id']][$state['question']['id']]['a'][
 					$state['question']['ca_id']
 				]
-				."\n</div>\n";
+				.".\n"
+				."<script>\n"
+				."setTimeout(function(){\n"
+				."$('.m-game .trivia-result').attr('data-mgame', 'hidden');\n"
+				."}, 1500);\n"
+				."setTimeout(function(){\n"
+				."$('.m-game .trivia-result').remove();\n"
+				."}, 1800);\n"
+				."</script>\n"
+				."</div>\n";
 		}
 
 		$questions = $state['questions'];
@@ -313,7 +360,8 @@ else
 			{
 				unset($_SESSION['mgame_trivia_session'],
 					$_SESSION['mgame_trivia_'.$state_id]);
-				echo "{C.NEXT}";
+				echo "<pre class=\"m-code\">{TRIVIA.NEXTGAME}</pre>\n"
+					."<script>mgameCheckForCodes();</script>\n";
 			}
 		}
 	}
