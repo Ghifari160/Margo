@@ -17,7 +17,7 @@ define('AUTHOR_PORTOFOLIO', ''); // Author's portofolio URL
 define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 0);
-define('VMINOR', 1);
+define('VMINOR', 2);
 define('VBUILD', 'c21fc292');
 
 define('HOST_NAME', 'Google Cloud Platform');
