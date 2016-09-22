@@ -81,8 +81,8 @@ else if($_REQUEST['p'] == "g")
 
 			if(($user = gapi_getUserInfo($rJson['access_token'])) !== false)
 			{
-				if(gCheckWhitelist($user))
-				{
+				// if(gCheckWhitelist($user))
+				// {
 					setcookie('mgame_user', true, time() + $rJson['expires_in'],
 						'/');
 					setcookie('mgame_g_access_token', $rJson['access_token'],
@@ -95,9 +95,9 @@ else if($_REQUEST['p'] == "g")
 					}
 
 					header('location: '.$redirUrl.'');
-				}
-				else
-					loginErr(2);
+				// }
+				// else
+				// 	loginErr(2);
 			}
 			else
 				loginErr(3);

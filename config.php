@@ -18,7 +18,7 @@ define('COPYRIGHT_YEAR', 2016);
 
 define('VMAJOR', 1);
 define('VMINOR', 0);
-define('VBUILD', 'e85b907d-R1');
+define('VBUILD', 'e85b907d-R2');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');
