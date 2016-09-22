@@ -8,9 +8,9 @@ app_cookieCleanup();
 if(!isUserLoggedIn() && $path !== "/login" && $path !== "/adminonly"
 	&& $path !== "/e")
 	header('location: '.createLoginUrl($path).'');
-else if(!isAdminLoggedIn() && $path !== "/login" && $path !== "/adminonly"
-	&& $path !== "/e")
-	header('location: /adminonly');
+// else if(!isAdminLoggedIn() && $path !== "/login" && $path !== "/adminonly"
+// 	&& $path !== "/e")
+// 	header('location: /adminonly');
 else if(isUserLoggedIn() && $path == "/login")
 {
 	if(!isset($_REQUEST['force']) || $_REQUEST['force'] !== "1")
