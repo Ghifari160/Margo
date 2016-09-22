@@ -205,6 +205,9 @@ if($path == '/assets/js/v0.1-dev.js'):
 
 		$title.text("Margo: The Game").data("italicize", "margo");
 		$.refreshText();
+
+		toggleWait("Loading trivia questions...");
+		loadTrivia();
 	}
 
 	function titleToLoading()
@@ -240,15 +243,45 @@ if($path == '/assets/js/v0.1-dev.js'):
 			header = headerCanvas.getContext('2d'),
 			counter = 0;
 
+		toggleWait('');
+
 		canvasAnimate_scaleTranslate(0, "100%",
 			"center", "center",
 			"100%", "100%",
 			headerCanvas, 500, titleToLoading);
+
+		$('#audio-1')[0].onended = function()
+		{
+			setTimeout(function()
+			{
+				$('#audio-2')[0].play();
+			}, 1000);
+		};
+
+		$('#audio-2')[0].onended = function()
+		{
+			setTimeout(function()
+			{
+				$('#audio-1')[0].play();
+			}, 1000);
+		};
+
+		$('#audio-1')[0].play();
+
 <?php else: ?>
 
 <?php endif; ?>
 
-		$('.m-game').on('click', '.trivia .answers .answer', function()
+		$('.m-title').click(function()
+		{
+			if($('.m-popup').attr('data-mgame') == 'visible')
+				toggleWait('');
+
+			toggleWait('Loading page...');
+			location.href = '/';
+		});
+
+		$('.m-wrapper').on('click', '.m-game .trivia .answers .answer', function()
 		{
 			$(this).parent().find('.answer .radio').each(function()
 			{
@@ -266,14 +299,14 @@ if($path == '/assets/js/v0.1-dev.js'):
 				.attr('data-mgame', 'visible');
 		});
 
-		$('.m-game').on('click', '.trivia .submit .m-btn', function()
+		$('.m-wrapper').on('click', '.m-game .trivia .submit .m-btn', function()
 		{
 			var val = $(this).parent().parent()
 				.find('.answers input[name='
 				+ $(this).parent().parent().find('.answers').attr('id')
 				+ ']').val();
 
-			toggleWait();
+			toggleWait('Checking answer...');
 
 			$.ajax({
 				url: $(this).parent().parent().parent().attr('action'),
@@ -282,7 +315,7 @@ if($path == '/assets/js/v0.1-dev.js'):
 					+ '=' + val,
 				success: function(data)
 				{
-					toggleWait();
+					toggleWait('');
 					$('.m-game').html(data);
 				}
 			});
@@ -302,13 +335,20 @@ function loadTrivia()
 		data: "",
 		success: function(data)
 		{
+
+			$('.m-wrapper').prepend('<div class="m-game"></div>');
 			$('.m-game').html(data);
+			toggleWait('');
+			$('.m-game').attr('data-mgame', 'visible');
 		},
 		error: function(data)
 		{
+			$('.m-wrapper').prepend('<div class="m-game"></div>');
 			$('.m-game').html(data);
+			toggleWait('');
+			$('.m-game').attr('data-mgame', 'visible');
 		}
-	})
+	});
 }
 
 function mgameCheckForCodes()
@@ -319,7 +359,7 @@ function mgameCheckForCodes()
 		{
 			setTimeout(function()
 			{
-				toggleWait();
+				toggleWait('Loading page...');
 				location.href = "/eros";
 			}, 2000);
 		}
@@ -349,7 +389,7 @@ function readjustPopupDiv()
 	});
 }
 
-function toggleWait()
+function toggleWait(msg)
 {
 	if($('.m-popup').attr('data-state') == "wait")
 	{
@@ -362,8 +402,8 @@ function toggleWait()
 		$('.m-modal').attr('data-mgame', 'visible');
 
 		$('.m-popup').html(
-			'<div class="title">Please Wait...</div>'
-			+ '<div class="content"></div>'
+			'<div class="title">Please Wait</div>'
+			+ '<div class="content">' + msg + '</div>'
 			+ '<div class="buttons"></div>'
 		)
 		.attr('data-mgame', 'visible').attr('data-state', 'wait');
@@ -412,7 +452,7 @@ function toggleErosResponse()
 			'render': 'createhangout',
 			'invites': [
 				{
-					//'id': '***',
+					'id': '***',
 					'type': 'PROFILE'
 				}
 			]

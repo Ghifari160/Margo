@@ -74,6 +74,7 @@ a:hover
 	font-size: 75px;
 	transform: translateY(-200%);
 	text-align: center;
+	cursor: pointer;
 }
 
 .m-header .m-title i
@@ -105,9 +106,92 @@ a:hover
 	background: #fff;
 }
 
+.m-wrapper div div
+{
+	width: auto;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+.m-arr .m-title
+{
+	display: table;
+	font-family: 'Open sans';
+	font-size: 36px;
+	margin: 0 auto;
+}
+
+.m-arr .m-sub-title
+{
+	display: table;
+	font-family: 'Open sans';
+	font-size: 26px;
+	margin: 0 auto;
+}
+
+.m-arr .m-copy
+{
+	display: table;
+	font-family: 'Open sans';
+	font-size: 20px;
+	margin: 0 auto;
+}
+
+.m-arr .content
+{
+	display: table;
+	font-family: 'Open sans';
+	font-size: 16px;
+}
+
+.m-arr .content.centered
+{
+	margin: 0 auto;
+}
+
+.m-arr .content article
+{
+	display: table;
+	font-family: 'Open sans';
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.m-arr .content article .title
+{
+	font-size: 18px;
+}
+
+.m-arr .content article pre
+{
+	width: 724px;
+	max-height: 400px;
+	margin: 5px 0;
+	padding: 10px 1.25%;
+	border: 1px solid #666;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.m-arr .content article p
+{
+	margin: 0 0 5px 0;
+}
+
 .m-game
 {
 	min-height: 100px;
+	transform: scale(0);
+	transition: transform ease 1s;
+}
+
+.m-game[data-mgame="visible"]
+{
+	transform: scale(1);
 }
 
 .m-game div
@@ -353,7 +437,8 @@ a:hover
 
 
 .m-btn,
-div.m-btn
+div.m-btn,
+.m-wrapper .m-btn
 {
 	display: table;
 	min-width: 75px;
@@ -483,14 +568,16 @@ button.m-btn.m-login
 }
 
 .m-popup .content::-webkit-scrollbar,
-.m-game .trivia .question blockquote::-webkit-scrollbar
+.m-game .trivia .question blockquote::-webkit-scrollbar,
+.m-arr article pre::-webkit-scrollbar
 {
 	width: 4px;
 	height: 4px;
 }
 
 .m-popup .content::-webkit-scrollbar-thumb,
-.m-game .trivia .question blockquote::-webkit-scrollbar-thumb
+.m-game .trivia .question blockquote::-webkit-scrollbar-thumb,
+.m-arr article pre::-webkit-scrollbar-thumb
 {
 	background: rgba(0,0,0,.26);
 }

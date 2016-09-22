@@ -5,7 +5,7 @@ $trivia = array(
 	'df551f9f' => array(
 		'5b20f762' => array(
 			'q' => "The following is an excerpt from a book.\n<blockquote>"
-				."\nHarry — yer a wizard.\n</blockquote>\nWhat is the title of"
+				."\nHarry &mdash; yer a wizard.\n</blockquote>\nWhat is the title of"
 				." this book?",
 			'a' => array(
 				'844c1b18' => '<i>Harry Potter and the Sorcerer\'s Stone</i>',
@@ -16,10 +16,10 @@ $trivia = array(
 		),
 		'1d49a5de' => array(
 			'q' => "The following is an excerpt from <i>Harry Potter and the"
-				." Sorcerer's Stone</i>\n<blockquote>\nHarry — yer a wizard.\n"
+				." Sorcerer's Stone</i>\n<blockquote>\nHarry &mdash; yer a wizard.\n"
 				."</blockquote>\nWho is the author of this book?",
 			'a' => array(
-				'b7dc514e' => "J. K. Rowling",
+				'b7dc514e' => "J.K. Rowling",
 				'3ab1b5bf' => "Jake Halpern",
 				'f42db9cd' => "Harper Lee",
 				'7072b087' => "William Golding"
@@ -28,13 +28,31 @@ $trivia = array(
 		'1e2b1343' => array(
 			'q' => "The following is an excerpt from <i>Harry Potter and the"
 				." Sorcerer's Stone</i> by J. K. Rowling\n<blockquote>\n"
-				."Harry — yer a wizard.\n</blockquote>\nWhich character from"
+				."Harry &mdash; yer a wizard.\n</blockquote>\nWhich character from"
 				." the book uttered those words to Harry?",
 			'a' => array(
 				'05ddebeb' => 'Hagrid',
 				'db98dc0a' => 'Dumbledore',
 				'c344f092' => 'Voldemort',
 				'416fcb92' => 'Snape'
+			)
+		),
+		'dfbf4be8' => array(
+			'q' => "What is the name of Harry's pet owl?",
+			'a' => array(
+				'3baca526' => 'Hedwig',
+				'ad6ddbf7' => 'Fawkes',
+				'6fb728ad' => 'Errol',
+				'6abafd42' => 'Pigwidgeon'
+			)
+		),
+		'a1c49e09' => array(
+			'q' => "Hedwig is a member of which owl species?",
+			'a' => array(
+				'1aac402f' => 'Snowy',
+				'42cbc1cf' => 'Barn',
+				'0e4ef986' => 'Scops',
+				'7dbab14b' => 'Eagle'
 			)
 		)
 	),
@@ -59,7 +77,7 @@ $trivia = array(
 				." authors of <i>Nightfall</i>?",
 			'a' => array(
 				'495fcb2d' => "Jake Halpern and Peter Kujawinski",
-				'd91ccd77' => "J.K Rowling and Marieke Nijkamp",
+				'd91ccd77' => "J.K. Rowling and Marieke Nijkamp",
 				'ec233d66' => "Charles Dickens and William Golding",
 				'e57724f3' => "Paula Hawkins and Ruth Ware"
 			)
@@ -78,6 +96,25 @@ $trivia = array(
 				'1959cfad' => "Desert Lands",
 				'6a29d90f' => "Northa",
 				'80a3f2c1' => "Aurora"
+			)
+		),
+		'7a606766' => array(
+			'q' => "Which one of this character from <i>Nightfall</i> is half-"
+				."human and half-Night Dweller?",
+			'a' => array(
+				'31ecc018' => "Kana",
+				'39131ff9' => "Line",
+				'd147be18' => "Marin",
+				'45e3d8d4' => "Soraya"
+			)
+		),
+		'339bdc6a' => array(
+			'q' => "What is the name of Kana's birth mother?",
+			'a' => array(
+				'6f8c13cd' => "Soraya",
+				'182e8ec4' => "Tarae",
+				'95e8a48c' => "Ivo",
+				'49eae2e0' => "Anthon"
 			)
 		)
 	)

@@ -15,7 +15,7 @@ function app_getCopyright()
 
 function app_getLicense()
 {
-	echo "Distributed under the terms of the <a href=\"about/licenses\">".APP_LICENSE."</a>\n";
+	echo "Distributed under the terms of the <a href=\"/about/licenses\">".APP_LICENSE."</a>.\n";
 }
 
 function app_getFavicons()
@@ -516,6 +516,10 @@ function decodeLoginError($param)
 			$msg = "Invalid state for trivia.";
 			break;
 
+		case 8:
+			$msg = "Cannot send request to GitHub Gist endpoint.";
+			break;
+
 		default:
 	}
 
@@ -545,6 +549,10 @@ function getExtraTitle()
 		case "home":
 		case "game":
 			$ret = "{N.A}";
+			break;
+
+		case "about":
+			$ret = "About";
 			break;
 
 		case "adminonly":

@@ -5,20 +5,20 @@ define('APP_ID', 'margothegame'); // App ID. If using Google Cloud Platform, ent
 define('APP_NAME', 'Margo: The Game');
 define('APP_URL', 'http://margo.beingthe.one/');
 define('APP_URL_ALTERNATE', 'http://margo.ghifari160.com/');
-define('APP_SUPPORT_EMAIL', 'business@ghifari160.com');
+define('APP_SUPPORT_EMAIL', 'margothegame@ghifari160.com');
 define('APP_LICENSE', 'MIT License');
 
-define('AUTHOR_NAME', 'Ghifari160');
-define('AUTHOR_EMAIL', 'business@ghifari160.com');
-define('AUTHOR_URL', 'https://www.github.com/Ghifari160');
-define('AUTHOR_URL_ALTERNATE', 'http://www.ghifari160.com/');
+define('AUTHOR_NAME', 'UnCoded');
+define('AUTHOR_EMAIL', 'margothegame@ghifari160.com');
+define('AUTHOR_URL', '/about/UnCoded');
+define('AUTHOR_URL_ALTERNATE', '');
 define('AUTHOR_PORTOFOLIO', ''); // Author's portofolio URL
 
 define('COPYRIGHT_YEAR', 2016);
 
-define('VMAJOR', 0);
-define('VMINOR', 2);
-define('VBUILD', 'c21fc292');
+define('VMAJOR', 1);
+define('VMINOR', 0);
+define('VBUILD', 'e85b907d');
 
 define('HOST_NAME', 'Google Cloud Platform');
 define('HOST_URL', 'https://cloud.google.com/');

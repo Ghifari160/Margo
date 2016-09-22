@@ -46,9 +46,6 @@ if($path == '/eros'):
 <?php
 elseif($path == "/game" || $path == "/"):
 ?>
-<script>
-	loadTrivia();
-</script>
 <?php endif; ?>
 <script src="https://apis.google.com/js/platform.js"></script>
 </head>
@@ -56,8 +53,8 @@ elseif($path == "/game" || $path == "/"):
 <body>
 <div class="m-modal" data-mgame="visible"></div>
 <div class="m-popup" data-state="wait" data-mgame="visible">
-	<div class="title">Please Wait...</div>
-	<div class="content"></div>
+	<div class="title">Please Wait</div>
+	<div class="content">Loading page...</div>
 	<div class="buttons"></div>
 	<script>readjustPopupDiv();</script>
 </div>
@@ -71,13 +68,12 @@ elseif($path == "/game" || $path == "/"):
 <?php
 if($path == '/' || $path == '/game'):
 ?>
-	<div class="m-game">
-		<canvas id="game-area"></canvas>
-	</div>
+	<audio id="audio-1" src="https://storage.googleapis.com/margothegame.appspot.com/audio/Overworld.mp3"></audio>
+	<audio id="audio-2" src="https://storage.googleapis.com/margothegame.appspot.com/audio/Pixelland.mp3"></audio>
 <?php
 elseif($path == '/eros'):
 ?>
-	<div class="m-game">
+	<div class="m-game" data-mgame="visible">
 		<div id="yt-player"></div>
 	</div>
 
@@ -90,6 +86,27 @@ elseif($path == '/eros'):
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+		var vidId = "";
+
+		$.ajax({
+			url: "https://api.github.com/gists/ef1ba3355d0abcf8641f04ab01223f3b",
+			type: "GET",
+			dataType: 'jsonp',
+			success: function(data)
+			{
+				$('.m-game').attr('data-id',
+					data.data.files['eros.gdata'].content);
+
+				vidId = data.data.files['eros.gdata'].content;
+			},
+			error: function(data)
+			{
+				toggleWait('Reloading page...');
+				location.href = '/e?p=8';
+				console.log(data);
+			}
+		})
+
 		var player;
 		function onYouTubePlayerAPIReady()
 		{
@@ -97,7 +114,7 @@ elseif($path == '/eros'):
 			{
 				width: width,
 				height: height,
-				videoId: 'nBsTSz4yIMo',
+				// videoId: 'M7lc1UVf-VE',
 				events:
 				{
 					'onReady': onPlayerReady,
@@ -120,6 +137,7 @@ elseif($path == '/eros'):
 
 		function onPlayerReady(event)
 		{
+			player.loadVideoById(vidId);
 			toggleWait();
 			event.target.playVideo();
 		}
@@ -162,6 +180,26 @@ elseif($path == '/e' && isset($_REQUEST['p']) && $_REQUEST['p'] !== "" &&
 		</div>
 	</div>
 <?php
+elseif($path == "/testaudio"):
+?>
+	<div class="m-game" data-mgame="visible">
+		<audio id="audio-1" src="https://storage.googleapis.com/margothegame.appspot.com/audio/Overworld.mp3"></audio>
+		<audio id="audio-2" src="https://storage.googleapis.com/margothegame.appspot.com/audio/Pixelland.mp3"></audio>
+		<script>
+		$('#audio-1')[0].onended = function()
+		{
+			$('#audio-2')[0].play();
+		}
+
+		$('#audio-2')[0].onended = function()
+		{
+			$('#audio-1')[0].play();
+		}
+
+		$('#audio-1')[0].play();
+		</script>
+	</div>
+<?php
 else:
 ?>
 	<div class="m-err">
@@ -179,7 +217,7 @@ else:
 
 		</div>
 		<div class="m-version">
-			<span class="m-title" data-italicize="margo">Margo: The Game</span> v<?php echo VMAJOR.".".VMINOR."-".VBUILD; ?>
+			<a href="/about"><span class="m-title" data-italicize="margo">Margo: The Game</span></a> v<?php echo VMAJOR.".".VMINOR."-".VBUILD; ?>
 
 		</div>
 		<div class="m-copy">
@@ -191,7 +229,7 @@ else:
 		</div>
 	</footer>
 </div>
-<?php if($path !== "/eros"): ?>
-<script>toggleWait();</script>
+<?php if($path !== "/eros" && $path !== "/game" && $path !== "/"): ?>
+<script>toggleWait('');</script>
 <?php endif; ?></body>
 </html>
