@@ -5,7 +5,7 @@
 Margo: The Game is a secret project of [Ghifari160][github user ghifari160]. This project will be hosted on [Google Cloud Platform][Google Cloud Platform]. The project, currently not accessible for public, can be accessed by navigating one of the following URLs:
 
 * ~//margo.beingthe.one~
-* ~//margo.ghifari160.com~
+* ~//margo.ghifari160.com~  
 **Edit:** the sites are down as this project is no longer needed. The final source code can be downloaded to see the project in action.
 
 ## TODO ##
