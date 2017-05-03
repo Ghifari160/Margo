@@ -4,8 +4,9 @@
 
 Margo: The Game is a secret project of [Ghifari160][github user ghifari160]. This project will be hosted on [Google Cloud Platform][Google Cloud Platform]. The project, currently not accessible for public, can be accessed by navigating one of the following URLs:
 
-* [//margo.beingthe.one][margo via being the one]
-* [//margo.ghifari160.com][margo via ghifari160]
+* ~//margo.beingthe.one~
+* ~//margo.ghifari160.com~
+**Edit:** the sites are down as this project is no longer needed. The final source code can be downloaded to see the project in action.
 
 ## TODO ##
 - [x] Header Canvas instead of static Header
@@ -35,5 +36,3 @@ All quotes used are taken from one of the best books ever. Quotes are subject to
 
 [github user ghifari160]: https://www.github.com/Ghifari160 "View Ghifari160 on GitHub"
 [Google Cloud Platform]: https://cloud.google.com
-[margo via being the one]: https://margo.beingthe.one "Margo via Being the One (Prefered)"
-[margo via ghifari160]: https://margo.ghifari160.com "Margo via Ghifari160"
